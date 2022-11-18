@@ -8,10 +8,13 @@ jobs:
   LBJobDockerCLI:
     runs-on: ubuntu-latest
     steps:
-    - name: Run 'Liquibase status in a Docker Container'
-    - uses: actions/checkout@v2
-    - uses: liquibase/liquibase-github-action@v7      
-      with:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Executing liquibase update
+        run: echo "Installing liquibase"
+      - uses: liquibase/liquibase-github-action@v7      
+        with:
         operation: 'update'
         classpath: './database/tables/'
         changeLogFile: 'databaseChangeLog.xml'
