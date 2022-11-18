@@ -13,13 +13,12 @@ jobs:
     - name: Run 'Liquibase status in a Docker Container'
       uses: docker://liquibase/liquibase:latest
       with:
-        args: --url="jdbc:postgresql://database-1.cb6fcuuxcjiy.us-east-1.rds.amazonaws.com:5432/postgres" --changeLogFile=./database/tables/databaseChangeLog.xml --username=postgres --password=postgres updateSQL --output-file=./updateSQL1.txt
-
+        args: --url="jdbc:postgresql://database-1.cb6fcuuxcjiy.us-east-1.rds.amazonaws.com:5432/postgres" --changeLogFile=./database/tables/databaseChangeLog.xml --username=postgres --password=postgres updateSQL
     - uses: actions/checkout@v2    
     - name: Run 'Liquibase update' in a Docker Container
       uses: docker://liquibase/liquibase:latest
       with:
-        args: --url="jdbc:postgresql://database-1.cb6fcuuxcjiy.us-east-1.rds.amazonaws.com:5432/postgres" --changeLogFile=./database/tables/databaseChangeLog.xml --username=postgres --password=postgres update --output-file=./update.txt
+        args: --url="jdbc:postgresql://database-1.cb6fcuuxcjiy.us-east-1.rds.amazonaws.com:5432/postgres" --changeLogFile=./database/tables/databaseChangeLog.xml --username=postgres --password=postgres update
 
 
 
