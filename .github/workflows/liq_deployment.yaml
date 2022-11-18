@@ -3,24 +3,37 @@ on:
   pull_request:
     paths:
       - 'database/**'
-  workflow_dispatch:
-    inputs:
-      body:
-        required: true
-      pr_number:
-        required: true
-      ref:
-        required: true
-      sha:
-        required: true
-
+ 
 jobs:
   LBJobDockerCLI:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run 'Liquibase in a Docker Container'
-      - uses: docker://liquibase/liquibase:latest
-      - with:
-          args: --url="jdbc:postgresql://database-1.cb6fcuuxcjiy.us-east-1.rds.amazonaws.com:5432/postgres" --changeLogFile=./database/tables/creates/tabla1.sql --username=postgres --password=postgres status --verbose --logLevel=info
-        
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Executing liquibase update type create schema
+        run: echo "Checking creates folder"
+      - uses: liquibase/liquibase-github-action@v7      
+        with:
+          operation: 'update'
+          classpath: './database/tables/'
+          changeLogFile: 'databaseChangeLog.xml'
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          url: 'jdbc:postgresql://database-1.cb6fcuuxcjiy.us-east-1.rds.amazonaws.com:5432/postgres'
+
+      - name: Executing liquibase update type data manipulation
+        run: echo "Checking data folder"
+      - uses: liquibase/liquibase-github-action@v7      
+        with:
+          operation: 'update'
+          classpath: './database/tables/'
+          changeLogFile: 'dataChangeLog.xml'
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          url: 'jdbc:postgresql://database-1.cb6fcuuxcjiy.us-east-1.rds.amazonaws.com:5432/postgres'
+       
+
+
+
+       

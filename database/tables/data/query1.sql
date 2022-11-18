@@ -1,0 +1,1 @@
+INSERT INTO public.tabla_demo1 (id,nombre) VALUES (1,'juan');
