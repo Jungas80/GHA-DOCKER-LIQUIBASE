@@ -8,11 +8,9 @@ jobs:
   LBJobDockerCLI:
     runs-on: ubuntu-latest
     steps:
-
-    - uses: actions/checkout@v2
-    - uses: docker://liquibase/liquibase:latest
     - name: Run 'Liquibase status in a Docker Container'
-      
+    - uses: actions/checkout@v2
+    - uses: liquibase/liquibase-github-action@v7      
       with:
         operation: 'update'
         classpath: './database/tables/'
